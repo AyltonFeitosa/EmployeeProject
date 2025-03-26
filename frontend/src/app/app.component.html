@@ -1,19 +1,41 @@
 <header>
-  <mat-toolbar class="bg-blue-400!">
+  <!-- Barra de navegação superior -->
+  <mat-toolbar class="bg-blue-400!"> <!-- Toolbar do Angular Material com fundo azul -->
+    
+    <!-- Botão com um evento para abrir/fechar o menu lateral -->
     <button (click)="drawer.toggle()" mat-icon-button class="text-white!" aria-label="Example icon-button with menu icon">
-      <mat-icon>menu</mat-icon>
-    </button>
+      <mat-icon>menu</mat-icon> <!-- Ícone do menu hambúrguer -->
+    </button> 
+
+    <!-- Nome do sistema dentro da barra de navegação -->
     <span class="text-white!">Employee Management System</span>
+
+    <!-- Espaçador para empurrar os elementos para a esquerda/direita -->
     <span class="example-spacer"></span>
+
   </mat-toolbar>
 </header>
+
+<!-- Contêiner do Drawer (Menu lateral) -->
 <mat-drawer-container class="" autosize>
-  <mat-drawer #drawer class="w-[360px] bg-white shadow" [mode]="'side'" [opened]="true">
+  
+  <!-- Menu lateral -->
+  <mat-drawer #drawer class="w-[300px] bg-white shadow-lg" [mode]="'side'" [opened]="true">
+    <div class="flex flex-col items-center gap-4 text-blue-700 p-4">
+      <a routerLink="/">DashBoard</a>
+      <a routerLink="/departments">Departamentos</a>
+      <a routerLink="/employees">Empregados</a>
+    </div>
   </mat-drawer>  
+
+  <!-- Conteúdo principal ao lado do menu lateral -->
   <mat-drawer-content>
-    <main class="min-h-screen bg-red-500"></main>
+    <main class="min-h-screen bg-gray-100">
+      <router-outlet></router-outlet><!-- Aqui vai ser carregado o conteudo do componente clicado-->
+    </main> <!-- Corpo da página com fundo gray -->
   </mat-drawer-content>
+
 </mat-drawer-container>
 
-
+<!-- Rodapé da página -->
 <footer></footer>

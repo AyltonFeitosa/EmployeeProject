@@ -1,0 +1,45 @@
+<div class="p-8">
+    @if (!isFormOpen) {
+    <div class="flex justify-between mb-2">
+        <h1 class="text-xl font-semibold">Departamentos</h1>
+        <button mat-flat-button class="bg-green-500!" (click)="isFormOpen=true">Add</button>
+    </div>    
+    <table class="table-auto border-collapse">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (item of departments; track $index) {
+            <tr>            
+                <td value>{{item.id}}</td>
+                <td>{{item.name}}</td>
+                <td class="flex gap-4 justify-center">
+                    <button mat-flat-button (click)="editDepartment(item)">Editar</button>
+                    <button mat-flat-button class="bg-red-500!" (click)="deleteDepartment(item.id)">Deletar</button>
+                </td>            
+            </tr>
+        }
+        </tbody>        
+    </table>
+} @else {
+<div class="flex">
+    <form class="w-[360px] m-auto shadow-lg py-6 p-16">
+        <h1 class="text-xl font-semibold mb-2 text-center">Add Departamento</h1>
+        <mat-form-field class="w-full">
+            <mat-label>Nome</mat-label>
+            <input matInput type="text" [(ngModel)]="name" name="name">
+        </mat-form-field>
+        <div class="w-full flex justify-center">
+            @if (isEdit) {
+                <button mat-flat-button class="bg-green-500!" (click)="updateDepartment()">Atualizar</button>
+            }@else {
+                <button mat-flat-button class="bg-green-500!" (click)="addDepartment()">Adicionar</button>
+            }            
+        </div>
+    </form>      
+</div>
+}

@@ -14,6 +14,18 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(option => option.UseSqlServer("name=DefaultConnection"));
 
 builder.Services.AddScoped<IRepository<Department>, Repository<Department>>();
+builder.Services.AddScoped<IRepository<Employee>, Repository<Employee>>();
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowCrosOrigin", policy =>
+    {
+        policy.AllowAnyOrigin();
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 using ( var scope = app.Services.CreateScope())
@@ -30,6 +42,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowCrosOrigin");
 
 app.UseHttpsRedirection();
 
