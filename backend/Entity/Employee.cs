@@ -16,5 +16,7 @@ namespace EmployeeManagementSystem.Entity
         public DateTime JoiningDate { get; set; }
         public DateTime? LastWorkingDate { get; set; } 
         public DateTime DateOfBirth { get; set; }
+        public int? UserId { get; set; } // Chave estrangeira para a tabela de usuários. Pode ser null pois um empregado pode não ter um usuário associado.
+        public User? User { get; set; } // Propiedade completa para a tabela de usuários.
     }
 }

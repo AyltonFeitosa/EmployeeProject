@@ -1,4 +1,6 @@
-﻿namespace EmployeeManagementSystem.Data
+﻿using EmployeeManagementSystem.Service;
+
+namespace EmployeeManagementSystem.Data
 {
     public class DataSendHelper
     {
@@ -18,7 +20,28 @@
                 dbContext.Employees.Add(
                     new Entity.Employee {Name = "Employee 2" });
             }
+
+            if (!dbContext.Users.Any())
+            {
+                var passwordHelper = new PasswordHelper();
+                dbContext.Users.Add(new Entity.User()
+                {
+                    Email = "admin@teste.com",
+                    Password = passwordHelper.HashPassword("12345"),
+                    Role = "Admin"
+                });
+                dbContext.Users.Add(new Entity.User()
+                {
+                    Email = "emp1@teste.com",
+                    Password = passwordHelper.HashPassword("12345"),
+                    Role = "Employee"
+
+                });
+            }
+            
             dbContext.SaveChanges();
+
+
         }
     }
 }

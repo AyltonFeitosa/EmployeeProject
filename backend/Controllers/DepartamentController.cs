@@ -1,5 +1,6 @@
 ﻿using EmployeeManagementSystem.Data;
 using EmployeeManagementSystem.Entity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.CompilerServices;
@@ -18,6 +19,7 @@ namespace EmployeeManagementSystem.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> AddDepartment([FromBody]Department department)
         {
             await departamentRepository.AddAsync(department);
@@ -26,6 +28,7 @@ namespace EmployeeManagementSystem.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteDepartment([FromRoute] int id)
         {
             await departamentRepository.DeleteAsync(id);
@@ -34,6 +37,7 @@ namespace EmployeeManagementSystem.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateDepartment([FromRoute] int id,[FromBody]Department model)
         {
             var department = await departamentRepository.FindByIdAsync(id);
@@ -44,12 +48,14 @@ namespace EmployeeManagementSystem.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAllDepartment()
         {
             var departments = await departamentRepository.GetAll();
             return Ok(departments);
         }
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetOne(int id)
         {
             var department = await departamentRepository.FindByIdAsync(id);

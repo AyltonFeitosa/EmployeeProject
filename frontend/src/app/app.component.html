@@ -1,17 +1,27 @@
 <header>
   <!-- Barra de navegação superior -->
-  <mat-toolbar class="bg-blue-400!"> <!-- Toolbar do Angular Material com fundo azul -->
+  <mat-toolbar class="bg-blue-400! flex justify-between"> <!-- Toolbar do Angular Material com fundo azul -->
     
-    <!-- Botão com um evento para abrir/fechar o menu lateral -->
-    <button (click)="drawer.toggle()" mat-icon-button class="text-white!" aria-label="Example icon-button with menu icon">
-      <mat-icon>menu</mat-icon> <!-- Ícone do menu hambúrguer -->
-    </button> 
-
-    <!-- Nome do sistema dentro da barra de navegação -->
-    <span class="text-white!">Employee Management System</span>
-
-    <!-- Espaçador para empurrar os elementos para a esquerda/direita -->
-    <span class="example-spacer"></span>
+    <div class="flex items-center"><!-- Botão com um evento para abrir/fechar o menu lateral -->
+      <button (click)="drawer.toggle()" mat-icon-button class="text-white!" aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon> <!-- Ícone do menu hambúrguer -->
+      </button> 
+  
+      <!-- Nome do sistema dentro da barra de navegação -->
+      <span class="text-white!">Employee Management System</span>
+    </div>
+    @if(authService.isLoggedIn){
+      <div class="flex gap-2 items-center">
+        <span class="text-white!">{{authService.authDetail?.email}}</span>
+        <button 
+          (click)="logout()" 
+          mat-icon-button 
+          class="text-white!">
+          <mat-icon>logout</mat-icon> <!-- Ícone do menu hambúrguer -->
+        </button>
+      </div>
+     
+    }
 
   </mat-toolbar>
 </header>
@@ -20,11 +30,15 @@
 <mat-drawer-container class="" autosize>
   
   <!-- Menu lateral -->
-  <mat-drawer #drawer class="w-[300px] bg-white shadow-lg" [mode]="'side'" [opened]="true">
+  <mat-drawer #drawer class="w-[300px] bg-white shadow-lg" [mode]="'side'" [opened]="authService.isLoggedIn">
     <div class="flex flex-col items-center gap-4 text-blue-700 p-4">
+      @if(authService.isEmployee){
+        <a routerLink="/employee-dashboard">DashBoard Funcionario</a>
+      } @else {      
       <a routerLink="/">DashBoard</a>
       <a routerLink="/departments">Departamentos</a>
       <a routerLink="/employees">Empregados</a>
+    }
     </div>
   </mat-drawer>  
 
